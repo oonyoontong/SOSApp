@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">HelpLah</string>
+    <string name="action_settings">Settings</string>
+    <string name="sendrequest">SendRequest</string>
+    <string name="messages">Messages</string>
+    <string name="new_request">New Request</string>
+    <string name="title">Title</string>
+</resources>

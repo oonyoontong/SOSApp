@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height = "match_parent">
+
+    <TextView
+        android:layout_width = "wrap_content"
+        android:layout_height = "wrap_content"
+        android:text = "@string/new_request"
+        android:id = "@+id/newRequest"
+        android:textColor = "#8B0000"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="30dp"
+        android:textSize = "35dp" />
+
+    <!--/Title-->
+
+    <TextView
+        android:id="@+id/NewRequestTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:focusable="true"
+        android:background="@null"
+        android:textSize="20dp"
+        android:textColor="#FF09090A"
+        android:text="@string/title" />
+
+    <EditText
+        android:id="@+id/EditTextTitle"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:paddingLeft="10dp"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="-55dp"
+        android:background="@drawable/rect"
+        android:hint="Title"
+        />
+
+    <!--Location-->
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="25dp"
+        android:background="@null"
+        android:focusable="true"
+        android:paddingBottom="10dp"
+        android:text="Location"
+        android:textColor="#FF09090A"
+        android:textSize="20dp" />
+
+    <EditText
+        android:id="@+id/EditTextLocation"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:paddingLeft="10dp"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="-50dp"
+        android:background="@drawable/rect"
+        android:hint="Location"
+        />
+
+    <!--Description-->
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="10dp"
+        android:focusable="true"
+        android:background="@null"
+        android:text="Description"
+        android:textSize="17dp"
+        android:textColor="#FF09090A" />
+
+    <EditText
+        android:id="@+id/EditTextDesc"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:paddingLeft="10dp"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="-50dp"
+        android:hint="Descripion"
+        android:background="@drawable/rect"
+        />
+
+    <!--Best by-->
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="25dp"
+        android:paddingBottom="15dp"
+        android:focusable="true"
+        android:background="@null"
+        android:textSize="20dp"
+        android:textColor="#FF09090A"
+        android:text="Best by" />
+
+    <EditText
+        android:id="@+id/EditTextBestby"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:paddingLeft="10dp"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="-50dp"
+        android:background="@drawable/rect"
+        android:hint="Date and Time"
+        />
+
+    <!--Priority-->
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="20dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="25dp"
+        android:focusable="true"
+        android:background="@null"
+        android:text="Priority"
+        android:textSize="20dp"
+        android:textColor="#FF09090A"/>
+
+    <Switch
+        android:id="@+id/SwitchUrgency"
+        android:ems="7"
+        android:checked="false"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="-50dp"
+        android:switchMinWidth="60dp"
+        android:layout_marginLeft="10dp"
+        android:text="Not Urgent"
+        android:textSize="20dp"
+        android:textOff="Not Urgent"
+        android:textOn="Urgent"/>
+
+
+    <Button
+        android:id="@+id/ButtonSendRequest"
+        android:ems="13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="25dp"
+        android:background="#63b1f2"
+        android:text="Send"
+        android:textSize="20dp"/>
+
+
+</LinearLayout>

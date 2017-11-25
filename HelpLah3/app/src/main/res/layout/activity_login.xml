@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android = "http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools = "http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height = "match_parent"
+    android:background="@drawable/gradient"
+    android:layout_centerVertical="true"
+    android:layout_centerInParent="true"
+    tools:context = ".MainActivity">
+
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="70dp"
+        android:layout_gravity="center"
+        app:srcCompat="@drawable/logo" />
+
+    <!--Username-->
+
+    <EditText
+        android:ems="10"
+        android:background="@drawable/round_corner"
+        android:layout_width="250dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginLeft="72dp"
+        android:paddingLeft="10dp"
+        android:hint="UserName"
+        android:focusable="true"
+        android:id="@+id/user_id"/>
+
+    <!--Password-->
+    <EditText
+        android:ems="10"
+        android:background="@drawable/round_corner"
+        android:layout_width="250dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="72dp"
+        android:paddingLeft="10dp"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:focusable="true"
+        android:id="@+id/user_pass"/>
+
+    <Button
+        android:id="@+id/login_button"
+        android:ems="16"
+        android:layout_width="wrap_content"
+        android:layout_height="37dp"
+        android:layout_marginLeft="67dp"
+        android:layout_marginTop="20dp"
+        android:background="#63b1f2"
+        android:text="Login" />
+
+    <TextView
+        android:id="@+id/register_click"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New? Register"
+        android:textSize="15dp"
+        android:layout_marginLeft="69dp"
+        android:textColor="#0a0a0a"
+        android:background="@android:color/transparent"
+        android:clickable="true"
+        android:layout_marginTop="10dp" />
+
+
+</LinearLayout>
