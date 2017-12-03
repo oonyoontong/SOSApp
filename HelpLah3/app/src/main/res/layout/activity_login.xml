@@ -5,19 +5,17 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height = "match_parent"
-    android:background="@drawable/gradient"
     android:layout_centerVertical="true"
     android:layout_centerInParent="true"
     tools:context = ".MainActivity">
 
 
     <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="70dp"
+        android:layout_width="170dp"
+        android:layout_height="170dp"
+        android:layout_marginTop="60dp"
         android:layout_gravity="center"
-        app:srcCompat="@drawable/logo" />
+        app:srcCompat="@drawable/logo"/>
 
     <!--Username-->
 
@@ -27,7 +25,7 @@
         android:layout_width="250dp"
         android:layout_height="45dp"
         android:layout_marginTop="70dp"
-        android:layout_marginLeft="72dp"
+        android:layout_gravity="center"
         android:paddingLeft="10dp"
         android:hint="UserName"
         android:focusable="true"
@@ -40,7 +38,7 @@
         android:layout_width="250dp"
         android:layout_height="45dp"
         android:layout_marginTop="15dp"
-        android:layout_marginLeft="72dp"
+        android:layout_gravity="center"
         android:paddingLeft="10dp"
         android:hint="Password"
         android:inputType="textPassword"
@@ -52,10 +50,18 @@
         android:ems="16"
         android:layout_width="wrap_content"
         android:layout_height="37dp"
-        android:layout_marginLeft="67dp"
+        android:layout_gravity="center"
         android:layout_marginTop="20dp"
         android:background="#63b1f2"
         android:text="Login" />
+
+    <CheckBox
+        android:id="@+id/checkbox"
+        android:text="Remember me"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"/>
 
     <TextView
         android:id="@+id/register_click"
@@ -63,11 +69,13 @@
         android:layout_height="wrap_content"
         android:text="New? Register"
         android:textSize="15dp"
-        android:layout_marginLeft="69dp"
+        android:layout_gravity="center"
         android:textColor="#0a0a0a"
         android:background="@android:color/transparent"
         android:clickable="true"
         android:layout_marginTop="10dp" />
+
+
 
 
 </LinearLayout>

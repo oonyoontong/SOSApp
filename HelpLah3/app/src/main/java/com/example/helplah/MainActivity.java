@@ -1,5 +1,7 @@
 package com.example.helplah;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -17,14 +19,22 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
 
+    public static final String KEY = "sendhelp_userid";
+
     private SectionPageAdapter mSectionPageAdapter;
 
     private ViewPager mViewPager;
+
+    SharedPreferences sharedPreferences;
+
+    private Integer userID;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +62,13 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
+        sharedPreferences = getSharedPreferences("login.conf", Context.MODE_PRIVATE);
+
+        //receive intent from login page
+        Intent intent = getIntent();
+        userID = intent.getIntExtra(LoginActivity.KEY, 0);
+
+        //Toast.makeText(this, "User ID: " + userID, Toast.LENGTH_SHORT).show();
         /*ListFragment fragment = new ListFragment();
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -86,8 +103,13 @@ public class MainActivity extends AppCompatActivity {
         switch(id){
             case R.id.action_settings:
                 return true;
+            case R.id.logout:
+                sharedPreferences.edit().clear().apply();
+                Intent logout = new Intent(MainActivity.this, LoginActivity.class);
+                MainActivity.this.startActivity(logout);
             case R.id.send_request:
                 Intent srintent = new Intent(this, SendRequestActivity.class);
+                srintent.putExtra(KEY, userID);
                 this.startActivity(srintent);
             case R.id.messages:
                 return true;
