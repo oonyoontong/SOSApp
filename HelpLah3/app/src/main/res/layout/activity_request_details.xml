@@ -124,7 +124,14 @@
 
     </LinearLayout>
 
-
+    <Button
+        android:id="@+id/accept_request_btn"
+        android:text="Accept Task"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="20dp"/>
 
 
 </RelativeLayout>

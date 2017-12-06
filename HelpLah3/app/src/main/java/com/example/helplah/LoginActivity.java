@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -83,6 +84,7 @@ public class LoginActivity extends AppCompatActivity {
                             if(items.optInt(0) != 0){
                                 //check whether checkbox is ticked
                                 if(checkFlag){
+                                    Log.d("sharedPreferences", "saving username and pass");
                                     editor.putString("username", userName);
                                     editor.putString("password", hashFunction.hash(userPass));
                                     editor.apply();

@@ -14,11 +14,20 @@ import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
 
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import utils.VolleyQueueSingleton;
 import volleys.SendHelpRequest;
@@ -44,6 +53,7 @@ public class SendRequestActivity extends AppCompatActivity {
     private Integer requesterID;
 
     private static final String TAG = "sendrequestActivity";
+    private static final String HELP_REQUEST_URL = "https://endpoint-dot-infosys-group2-4.appspot.com/_ah/api/sos/v1/request/new";
 
 
     @Override
@@ -89,11 +99,62 @@ public class SendRequestActivity extends AppCompatActivity {
     }
 
     public void sendHelpRequest(String title, String location, String description, String bestby, Boolean urgent, Integer userID, View v){
+
+        String priority;
+        if(urgent){
+            priority = "HIGH";
+        }else{
+            priority = "LOW";
+        }
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        Date bestByDate = null;
+
+        try {
+            bestByDate = sdf.parse(bestby);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        Log.d(TAG, sdf.format(bestByDate));
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(bestByDate);
+
+        JSONObject bestByJson = null;
+
+        try {
+            bestByJson = new JSONObject()
+                    .put("year", calendar.get(Calendar.YEAR))
+                    .put("month", calendar.get(Calendar.MONTH))
+                    .put("day", calendar.get(Calendar.DAY_OF_MONTH))
+                    .put("hours", calendar.get(Calendar.HOUR_OF_DAY))
+                    .put("minutes", calendar.get(Calendar.MINUTE));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        JSONObject jsonHelpRequest = new JSONObject();
+        try {
+            jsonHelpRequest
+                    .put("title", title)
+                    .put("description", description)
+                    .put("location", location)
+                    .put("priority", priority)
+                    .put("bestBy", bestByJson)
+                    .put("requesterId", userID);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
         Response.Listener<String> responseListener = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d(TAG, response);
-
             }
         };
 
@@ -103,8 +164,9 @@ public class SendRequestActivity extends AppCompatActivity {
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
             }
         };
-        SendHelpRequest sendHelpRequest = new SendHelpRequest(title, location, description, bestby, urgent, userID, responseListener, responseErrorListener);
+//        SendHelpRequest sendHelpRequest = new SendHelpRequest(title, location, description, bestby, urgent, userID, responseListener, responseErrorListener);
 
+        JsonObjectRequest sendHelpRequest = new JsonObjectRequest(Request.Method.POST, HELP_REQUEST_URL, jsonHelpRequest, null, responseErrorListener);
         VolleyQueueSingleton.getInstance(SendRequestActivity.this.getApplicationContext()).addToRequestQueue(sendHelpRequest);
 
         Toast.makeText(SendRequestActivity.this, "Request Sent", Toast.LENGTH_SHORT).show();

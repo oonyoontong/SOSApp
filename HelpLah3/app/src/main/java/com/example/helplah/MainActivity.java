@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
     SharedPreferences sharedPreferences;
 
-    private Integer userID;
+    public Integer userID;
 
     //keys for bundle
     public static final String TITLE_KEY = "title";
@@ -62,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
 
     private JSONObject queriedJsonObject;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,16 +70,22 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//            }
+//        });
 
         Log.d(TAG, "onCreate: Starting.");
+
+//        boolean finish = getIntent().getBooleanExtra("finish", false);
+//        if(finish){
+//            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+//            finish();
+//        }
 
 
         mViewPager = (ViewPager) findViewById(R.id.container);
@@ -308,16 +313,21 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.logout:
                 sharedPreferences.edit().clear().apply();
-                Intent logout = new Intent(MainActivity.this, LoginActivity.class);
-                MainActivity.this.startActivity(logout);
+                Intent logout = new Intent(this, LoginActivity.class);
+                logout.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(logout);
+                finish();
+                return true;
             case R.id.send_request:
                 Intent srintent = new Intent(this, SendRequestActivity.class);
                 srintent.putExtra(KEY, userID);
                 this.startActivity(srintent);
+                return true;
             case R.id.messages:
                 return true;
             case R.id.refresh:
                 refreshRecyclerViews();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

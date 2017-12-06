@@ -117,7 +117,7 @@
         android:layout_marginLeft="100dp"
         android:layout_marginTop="-50dp"
         android:background="@drawable/rect"
-        android:hint="Date and Time"
+        android:hint="yyyy-MM-dd HH:mm:ss"
         />
 
     <!--Priority-->

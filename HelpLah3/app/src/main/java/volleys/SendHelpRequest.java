@@ -5,6 +5,9 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,7 +21,6 @@ public SendHelpRequest(String title, String location, String descripiton, String
         params.put("title", title);
         params.put("location", location);
         params.put("description", descripiton);
-        params.put("besBy", bestby);
         if(priority){
             //high priority
             params.put("priority", "HIGH");
@@ -27,6 +29,17 @@ public SendHelpRequest(String title, String location, String descripiton, String
         }
         params.put("requesterID",String.valueOf(requesterID));
 
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    Date dt = null;
+    try {
+        dt = sdf.parse(bestby);
+    } catch (ParseException e) {
+        e.printStackTrace();
+    }
+
+    bestby = sdf.format(dt);
+        params.put("bestBy", bestby);
     }
 
     public Map<String, String> getParams() {
