@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.app.FragmentTransaction;
+import android.support.v4.app.FragmentTransaction;
 import android.app.ListFragment;
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,7 +21,24 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import utils.VolleyQueueSingleton;
+
 public class MainActivity extends AppCompatActivity {
+
+    private final String GET_REQUEST_URL = "https://endpoint-dot-infosys-group2-4.appspot.com/_ah/api/sos/v1/request/all";
 
     private static final String TAG = "MainActivity";
 
@@ -34,6 +51,16 @@ public class MainActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences;
 
     private Integer userID;
+
+    //keys for bundle
+    public static final String TITLE_KEY = "title";
+    public static final String DESCRIPTION_KEY = "description";
+    public static final String BESTBY_KEY = "bestby";
+    public static final String REQUESTERID_KEY = "requesterID";
+
+    private SectionPageAdapter adapter;
+
+    private JSONObject queriedJsonObject;
 
 
     @Override
@@ -57,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         mViewPager = (ViewPager) findViewById(R.id.container);
-        setupViewPager(mViewPager);
+
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
@@ -68,21 +95,112 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = getIntent();
         userID = intent.getIntExtra(LoginActivity.KEY, 0);
 
-        //Toast.makeText(this, "User ID: " + userID, Toast.LENGTH_SHORT).show();
-        /*ListFragment fragment = new ListFragment();
-        FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.activity_main, fragment);
-        fragmentTransaction.commit();*/
+        //get requests from server and parse data and send to tab fragments
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, GET_REQUEST_URL, null, new Response.Listener<JSONObject>(){
+            @Override
+            public void onResponse(JSONObject response) {
+                setupViewPager(mViewPager, response);
+            }
+        }, new Response.ErrorListener(){
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.d(TAG, "Error: " + error.getMessage());
+            }
+        });
+        VolleyQueueSingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);
 
+        //TODO: refresh button for recyclerview
     }
 
-    private void setupViewPager(ViewPager viewPager){
-        SectionPageAdapter adapter = new SectionPageAdapter(getSupportFragmentManager());
-        adapter.addFragment(new Maintab1Fragment(), "Help..");
-        adapter.addFragment(new Maintab2Fragment(), "HelpLAH!");
-        adapter.addFragment(new Maintab3Fragment(), "HelpMe");
+    private void queryData(){
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, GET_REQUEST_URL, null, new Response.Listener<JSONObject>(){
+            @Override
+            public void onResponse(JSONObject response) {
+                queriedJsonObject = response;
+            }
+        }, new Response.ErrorListener(){
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.d(TAG, "Error: " + error.getMessage());
+            }
+        });
+        VolleyQueueSingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);
+    }
+
+    private void setupViewPager(ViewPager viewPager, JSONObject data){
+
+        JSONArray dataArray = null;
+        List<JSONObject> requestDataJsonList = new ArrayList<>();
+        try {
+            dataArray = data.getJSONArray("items");
+            for(int i = 0; i < dataArray.length(); i ++){
+                JSONObject requestData = dataArray.getJSONObject(i);
+                requestDataJsonList.add(requestData);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        Maintab1Fragment maintab1Fragment = new Maintab1Fragment();
+        Maintab2Fragment maintab2Fragment = new Maintab2Fragment();
+        Maintab3Fragment maintab3Fragment = new Maintab3Fragment();
+
+        List<ListRequest> tab1RequestList = new ArrayList<>();
+        List<ListRequest> tab2RequestList = new ArrayList<>();
+        List<ListRequest> tab3RequestList = new ArrayList<>();
+
+        for(JSONObject requestData : requestDataJsonList){
+            try {
+                if(requestData.getString("priority").equals("LOW") && requestData.getInt("requesterId") != userID){
+                    String title = requestData.getString("title");
+                    String description = requestData.getString("description");
+                    String location = requestData.getString("location");
+                    String bestby = requestData.getString("bestBy");
+                    Integer requesterId = requestData.getInt("requesterId");
+                    ListRequest listRequest = new ListRequest(title, description, location, bestby, requesterId);
+                    tab1RequestList.add(listRequest);
+                }else if(requestData.getString("priority").equals("HIGH") && requestData.getInt("requesterId") != userID){
+                    String title = requestData.getString("title");
+                    String description = requestData.getString("description");
+                    String location = requestData.getString("location");
+                    String bestby = requestData.getString("bestBy");
+                    Integer requesterId = requestData.getInt("requesterId");
+                    ListRequest listRequest = new ListRequest(title, description, location, bestby, requesterId);
+                    tab2RequestList.add(listRequest);
+                }else{
+                    String title = requestData.getString("title");
+                    String description = requestData.getString("description");
+                    String location = requestData.getString("location");
+                    String bestby = requestData.getString("bestBy");
+                    Integer requesterId = requestData.getInt("requesterId");
+                    ListRequest listRequest = new ListRequest(title, description, location, bestby, requesterId);
+                    tab3RequestList.add(listRequest);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        adapter = new SectionPageAdapter(getSupportFragmentManager());
+        adapter.addFragment(maintab1Fragment, "Help");
+        adapter.addFragment(maintab2Fragment, "HelpLAH!");
+        adapter.addFragment(maintab3Fragment, "HelpMe");
         viewPager.setAdapter(adapter);
+
+        if(tab1RequestList.size() != 0){
+            maintab1Fragment.updateRecyclerView(tab1RequestList);
+        }
+        if(tab2RequestList.size() != 0){
+            maintab2Fragment.updateRecyclerView(tab2RequestList);
+
+        }
+        if(tab3RequestList.size() != 0){
+            maintab3Fragment.updateRecyclerView(tab3RequestList);
+        }
+
+
+
     }
 
     @Override
@@ -90,6 +208,91 @@ public class MainActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
+    }
+
+
+    public void refreshRecyclerViews(){
+        queryData();
+        if(queriedJsonObject != null){
+            Log.d(TAG, "query succesful");
+            JSONArray dataArray = null;
+            List<JSONObject> requestDataJsonList = new ArrayList<>();
+            try {
+                dataArray = queriedJsonObject.getJSONArray("items");
+                for(int i = 0; i < dataArray.length(); i ++){
+                    JSONObject requestData = dataArray.getJSONObject(i);
+                    requestDataJsonList.add(requestData);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            List<ListRequest> tab1RequestList = new ArrayList<>();
+            List<ListRequest> tab2RequestList = new ArrayList<>();
+            List<ListRequest> tab3RequestList = new ArrayList<>();
+
+            for(JSONObject requestData : requestDataJsonList){
+                try {
+                    if(requestData.getString("priority").equals("LOW") && requestData.getInt("requesterId") != userID){
+                        String title = requestData.getString("title");
+                        String description = requestData.getString("description");
+                        String location = requestData.getString("location");
+                        String bestby = requestData.getString("bestBy");
+                        Integer requesterId = requestData.getInt("requesterId");
+                        ListRequest listRequest = new ListRequest(title, description, location, bestby, requesterId);
+                        tab1RequestList.add(listRequest);
+                    }else if(requestData.getString("priority").equals("HIGH") && requestData.getInt("requesterId") != userID){
+                        String title = requestData.getString("title");
+                        String description = requestData.getString("description");
+                        String location = requestData.getString("location");
+                        String bestby = requestData.getString("bestBy");
+                        Integer requesterId = requestData.getInt("requesterId");
+                        ListRequest listRequest = new ListRequest(title, description, location, bestby, requesterId);
+                        tab2RequestList.add(listRequest);
+                    }else{
+                        String title = requestData.getString("title");
+                        String description = requestData.getString("description");
+                        String location = requestData.getString("location");
+                        String bestby = requestData.getString("bestBy");
+                        Integer requesterId = requestData.getInt("requesterId");
+                        ListRequest listRequest = new ListRequest(title, description, location, bestby, requesterId);
+                        tab3RequestList.add(listRequest);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            Maintab1Fragment maintab1Fragment = (Maintab1Fragment) getSupportFragmentManager().findFragmentByTag(getFragmentTag(mViewPager.getId(), 0));
+            Maintab2Fragment maintab2Fragment = (Maintab2Fragment) getSupportFragmentManager().findFragmentByTag(getFragmentTag(mViewPager.getId(), 1));
+            Maintab3Fragment maintab3Fragment = (Maintab3Fragment) getSupportFragmentManager().findFragmentByTag(getFragmentTag(mViewPager.getId(), 2));
+
+            if(tab1RequestList.size() != 0){
+                Log.d(TAG, "updating tab1");
+                maintab1Fragment.updateRecyclerView(tab1RequestList);
+            }
+            if(tab2RequestList.size() != 0){
+                Log.d(TAG, "updating tab2");
+                maintab2Fragment.updateRecyclerView(tab2RequestList);
+
+            }
+            if(tab3RequestList.size() != 0){
+                Log.d(TAG, "updating tab3");
+                maintab3Fragment.updateRecyclerView(tab3RequestList);
+            }
+
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.commitNow();
+
+            adapter.notifyDataSetChanged();
+
+        }else{
+            Log.d(TAG, "query unsuccesful");
+        }
+    }
+
+    private String getFragmentTag(int viewPagerId, int fragmentPosition){
+        return "android:switcher:" + viewPagerId + ":" + fragmentPosition;
     }
 
     @Override
@@ -113,8 +316,12 @@ public class MainActivity extends AppCompatActivity {
                 this.startActivity(srintent);
             case R.id.messages:
                 return true;
+            case R.id.refresh:
+                refreshRecyclerViews();
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
+
+
 }

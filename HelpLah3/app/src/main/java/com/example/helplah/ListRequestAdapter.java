@@ -34,7 +34,7 @@ public class ListRequestAdapter extends RecyclerView.Adapter<ListRequestAdapter.
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         ListRequest listRequest = listRequests.get(position);
-        holder.textViewHead.setText(listRequest.getHead());
+        holder.textViewHead.setText(listRequest.getTitle());
         holder.textViewDisc.setText(listRequest.getDescription());
     }
 
@@ -43,12 +43,21 @@ public class ListRequestAdapter extends RecyclerView.Adapter<ListRequestAdapter.
         return listRequests.size();
     }
 
+    public void setListRequests(List<ListRequest> listRequests) {
+        this.listRequests = listRequests;
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         public TextView textViewHead;
         public TextView textViewDisc;
         private final Context context;
+
         public static final String REQUESTER_ID = "REQUESTER_ID";
+        public static final String REQUEST_TITLE = "REQUEST_TITLE";
+        public static final String REQUEST_DESCRIPTION = "REQUEST_DESCRIPTION";
+        public static final String REQUEST_LOCATION = "REQUEST_LOCATION";
+        public static final String REQUEST_BESTBY = "REQUEST_BESTBY";
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -62,7 +71,17 @@ public class ListRequestAdapter extends RecyclerView.Adapter<ListRequestAdapter.
         public void onClick(View view) {
             Intent intent = new Intent(context, RequestDetails.class);
             int position = getAdapterPosition();
-            String requesterID = listRequests.get(position).getRequesterID();
+
+            String title = listRequests.get(position).getTitle();
+            String description = listRequests.get(position).getDescription();
+            String location = listRequests.get(position).getLocation();
+            String bestby = listRequests.get(position).getBestby();
+            Integer requesterID = listRequests.get(position).getRequesterID();
+
+            intent.putExtra(REQUEST_TITLE, title);
+            intent.putExtra(REQUEST_DESCRIPTION, description);
+            intent.putExtra(REQUEST_LOCATION, location);
+            intent.putExtra(REQUEST_BESTBY, bestby);
             intent.putExtra(REQUESTER_ID, requesterID);
             context.startActivity(intent);
 

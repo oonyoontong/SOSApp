@@ -16,11 +16,17 @@
         android:id="@+id/messages"
         android:title="@string/messages"
         android:icon="@drawable/messagingicon"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="never" />
     <item
         android:id="@+id/send_request"
         android:title="@string/sendrequest"
         android:icon="@drawable/sendrequesticon"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/refresh"
+        android:title="Refresh"
+        android:icon="@drawable/refresh_btn"
         app:showAsAction="ifRoom" />
 
 </menu>
