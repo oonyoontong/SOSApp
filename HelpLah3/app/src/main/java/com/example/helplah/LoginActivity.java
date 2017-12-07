@@ -91,8 +91,10 @@ public class LoginActivity extends AppCompatActivity {
                                 }
                                 Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                intent.putExtra(KEY, items.optInt(0));
-
+//                                intent.putExtra(KEY, items.optInt(0));
+                                Log.d(TAG, String.valueOf(items.optInt(0)));
+                                editor.putInt("userId", items.optInt(0));
+                                editor.apply();
                                 LoginActivity.this.startActivity(intent);
                                 finish();
                             }else{
@@ -118,6 +120,8 @@ public class LoginActivity extends AppCompatActivity {
 
         String user_name = sharedPreferences.getString("username", "");
         String password = sharedPreferences.getString("password", "");
+        Log.d(TAG, user_name);
+        Log.d(TAG, password);
         if(!user_name.equals("") && !password.equals("")){
             Response.Listener<String> responseListener = new Response.Listener<String>(){
                 @Override

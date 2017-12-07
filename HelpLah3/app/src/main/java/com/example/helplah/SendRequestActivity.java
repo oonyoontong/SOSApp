@@ -2,6 +2,7 @@ package com.example.helplah;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -55,6 +56,7 @@ public class SendRequestActivity extends AppCompatActivity {
     private static final String TAG = "sendrequestActivity";
     private static final String HELP_REQUEST_URL = "https://endpoint-dot-infosys-group2-4.appspot.com/_ah/api/sos/v1/request/new";
 
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,8 +70,11 @@ public class SendRequestActivity extends AppCompatActivity {
         sendButton = (Button) findViewById(R.id.ButtonSendRequest);
 
         //get userID
-        Intent intent = getIntent();
-        requesterID = intent.getIntExtra(MainActivity.KEY, 0);
+//        Intent intent = getIntent();
+//        requesterID = intent.getIntExtra(MainActivity.KEY, 0);
+        sharedPreferences = getSharedPreferences("login.conf", Context.MODE_PRIVATE);
+        requesterID = sharedPreferences.getInt("userId", 0);
+        Log.d(TAG, String.valueOf(requesterID));
 
         //control the display of switch text
         prioritySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -165,13 +170,13 @@ public class SendRequestActivity extends AppCompatActivity {
             }
         };
 //        SendHelpRequest sendHelpRequest = new SendHelpRequest(title, location, description, bestby, urgent, userID, responseListener, responseErrorListener);
-
-        JsonObjectRequest sendHelpRequest = new JsonObjectRequest(Request.Method.POST, HELP_REQUEST_URL, jsonHelpRequest, null, responseErrorListener);
+        Log.d(TAG, String.valueOf(userID));
+        SendHelpRequest sendHelpRequest = new SendHelpRequest(title, location, description, bestby, urgent, userID);
         VolleyQueueSingleton.getInstance(SendRequestActivity.this.getApplicationContext()).addToRequestQueue(sendHelpRequest);
 
         Toast.makeText(SendRequestActivity.this, "Request Sent", Toast.LENGTH_SHORT).show();
 
-        Intent intent = new Intent(SendRequestActivity.this, MainActivity.class);
+        Intent intent = new Intent(SendRequestActivity.this.getApplicationContext(), MainActivity.class);
         SendRequestActivity.this.startActivity(intent);
 
     }

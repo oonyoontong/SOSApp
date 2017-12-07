@@ -8,13 +8,15 @@ public class ListRequest {
     private String bestby;
     private Boolean urgent;
     private Integer requesterID;
+    private Integer rqid;
 
-    public ListRequest(String title, String description, String location, String bestby, Integer requesterID) {
+    public ListRequest(String title, String description, String location, String bestby, Integer requesterID, Integer rqid) {
         this.title = title;
         this.description = description;
         this.requesterID = requesterID;
         this.bestby = bestby;
         this.location = location;
+        this.rqid = rqid;
     }
 
     public ListRequest(){
@@ -58,6 +60,10 @@ public class ListRequest {
 
     public Integer getRequesterID() {
         return requesterID;
+    }
+
+    public Integer getRqid() {
+        return rqid;
     }
 }
 

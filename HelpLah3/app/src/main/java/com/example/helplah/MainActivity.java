@@ -96,9 +96,14 @@ public class MainActivity extends AppCompatActivity {
 
         sharedPreferences = getSharedPreferences("login.conf", Context.MODE_PRIVATE);
 
+        userID = sharedPreferences.getInt("userId", 0);
+        if(userID == 0){
+            Log.d(TAG, "user id got problem");
+        }
         //receive intent from login page
-        Intent intent = getIntent();
-        userID = intent.getIntExtra(LoginActivity.KEY, 0);
+//        Intent intent = getIntent();
+//        userID = intent.getIntExtra(LoginActivity.KEY, 0);
+        Log.d(TAG, String.valueOf(userID));
 
         //get requests from server and parse data and send to tab fragments
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, GET_REQUEST_URL, null, new Response.Listener<JSONObject>(){
@@ -157,29 +162,27 @@ public class MainActivity extends AppCompatActivity {
 
         for(JSONObject requestData : requestDataJsonList){
             try {
+                String title = requestData.getString("title");
+                String description = requestData.getString("description");
+                String location = requestData.getString("location");
+                String bestby = requestData.getString("bestBy");
+                Integer requesterId = requestData.getInt("requesterId");
+                Integer rqid = requestData.getInt("rqId");
                 if(requestData.getString("priority").equals("LOW") && requestData.getInt("requesterId") != userID){
-                    String title = requestData.getString("title");
-                    String description = requestData.getString("description");
-                    String location = requestData.getString("location");
-                    String bestby = requestData.getString("bestBy");
-                    Integer requesterId = requestData.getInt("requesterId");
-                    ListRequest listRequest = new ListRequest(title, description, location, bestby, requesterId);
+//                    Log.d("requestdetails", title);
+//                    Log.d("requestdetails", description);
+//                    Log.d("requestdetails", location);
+//                    Log.d("requestdetails", bestby);
+//                    Log.d("requestdetails", String.valueOf(requesterId));
+//                    Log.d("requestdetails", String.valueOf(rqid));
+                    ListRequest listRequest = new ListRequest(title, description, location, bestby, requesterId, rqid);
                     tab1RequestList.add(listRequest);
                 }else if(requestData.getString("priority").equals("HIGH") && requestData.getInt("requesterId") != userID){
-                    String title = requestData.getString("title");
-                    String description = requestData.getString("description");
-                    String location = requestData.getString("location");
-                    String bestby = requestData.getString("bestBy");
-                    Integer requesterId = requestData.getInt("requesterId");
-                    ListRequest listRequest = new ListRequest(title, description, location, bestby, requesterId);
+
+                    ListRequest listRequest = new ListRequest(title, description, location, bestby, requesterId, rqid);
                     tab2RequestList.add(listRequest);
                 }else{
-                    String title = requestData.getString("title");
-                    String description = requestData.getString("description");
-                    String location = requestData.getString("location");
-                    String bestby = requestData.getString("bestBy");
-                    Integer requesterId = requestData.getInt("requesterId");
-                    ListRequest listRequest = new ListRequest(title, description, location, bestby, requesterId);
+                    ListRequest listRequest = new ListRequest(title, description, location, bestby, requesterId, rqid);
                     tab3RequestList.add(listRequest);
                 }
             } catch (JSONException e) {
@@ -238,29 +241,27 @@ public class MainActivity extends AppCompatActivity {
 
             for(JSONObject requestData : requestDataJsonList){
                 try {
+                    String title = requestData.getString("title");
+                    String description = requestData.getString("description");
+                    String location = requestData.getString("location");
+                    String bestby = requestData.getString("bestBy");
+                    Integer requesterId = requestData.getInt("requesterId");
+                    Integer rqid = requestData.getInt("rqId");
                     if(requestData.getString("priority").equals("LOW") && requestData.getInt("requesterId") != userID){
-                        String title = requestData.getString("title");
-                        String description = requestData.getString("description");
-                        String location = requestData.getString("location");
-                        String bestby = requestData.getString("bestBy");
-                        Integer requesterId = requestData.getInt("requesterId");
-                        ListRequest listRequest = new ListRequest(title, description, location, bestby, requesterId);
+//                        Log.d("requestdetails", title);
+//                        Log.d("requestdetails", description);
+//                        Log.d("requestdetails", location);
+//                        Log.d("requestdetails", bestby);
+//                        Log.d("requestdetails", String.valueOf(requesterId));
+//                        Log.d("requestdetails", String.valueOf(rqid));
+                        ListRequest listRequest = new ListRequest(title, description, location, bestby, requesterId, rqid);
                         tab1RequestList.add(listRequest);
                     }else if(requestData.getString("priority").equals("HIGH") && requestData.getInt("requesterId") != userID){
-                        String title = requestData.getString("title");
-                        String description = requestData.getString("description");
-                        String location = requestData.getString("location");
-                        String bestby = requestData.getString("bestBy");
-                        Integer requesterId = requestData.getInt("requesterId");
-                        ListRequest listRequest = new ListRequest(title, description, location, bestby, requesterId);
+
+                        ListRequest listRequest = new ListRequest(title, description, location, bestby, requesterId, rqid);
                         tab2RequestList.add(listRequest);
                     }else{
-                        String title = requestData.getString("title");
-                        String description = requestData.getString("description");
-                        String location = requestData.getString("location");
-                        String bestby = requestData.getString("bestBy");
-                        Integer requesterId = requestData.getInt("requesterId");
-                        ListRequest listRequest = new ListRequest(title, description, location, bestby, requesterId);
+                        ListRequest listRequest = new ListRequest(title, description, location, bestby, requesterId, rqid);
                         tab3RequestList.add(listRequest);
                     }
                 } catch (JSONException e) {
@@ -320,7 +321,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.send_request:
                 Intent srintent = new Intent(this, SendRequestActivity.class);
-                srintent.putExtra(KEY, userID);
+                //srintent.putExtra(KEY, userID);
                 this.startActivity(srintent);
                 return true;
             case R.id.messages:

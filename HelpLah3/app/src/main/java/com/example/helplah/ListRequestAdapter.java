@@ -58,6 +58,7 @@ public class ListRequestAdapter extends RecyclerView.Adapter<ListRequestAdapter.
         public static final String REQUEST_DESCRIPTION = "REQUEST_DESCRIPTION";
         public static final String REQUEST_LOCATION = "REQUEST_LOCATION";
         public static final String REQUEST_BESTBY = "REQUEST_BESTBY";
+        public static final String REQUEST_ID = "REQUEST_ID";
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -77,12 +78,14 @@ public class ListRequestAdapter extends RecyclerView.Adapter<ListRequestAdapter.
             String location = listRequests.get(position).getLocation();
             String bestby = listRequests.get(position).getBestby();
             Integer requesterID = listRequests.get(position).getRequesterID();
+            Integer rqid = listRequests.get(position).getRqid();
 
             intent.putExtra(REQUEST_TITLE, title);
             intent.putExtra(REQUEST_DESCRIPTION, description);
             intent.putExtra(REQUEST_LOCATION, location);
             intent.putExtra(REQUEST_BESTBY, bestby);
             intent.putExtra(REQUESTER_ID, requesterID);
+            intent.putExtra(REQUEST_ID, rqid);
             context.startActivity(intent);
 
         }
