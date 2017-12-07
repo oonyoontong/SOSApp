@@ -195,16 +195,26 @@ public class MainActivity extends AppCompatActivity {
         adapter.addFragment(maintab2Fragment, "HelpLAH!");
         adapter.addFragment(maintab3Fragment, "HelpMe");
         viewPager.setAdapter(adapter);
+        viewPager.setOffscreenPageLimit(2);
 
         if(tab1RequestList.size() != 0){
-            maintab1Fragment.updateRecyclerView(tab1RequestList);
+            Log.d(TAG, "got tab1requestlist");
+            Maintab1Fragment tab1 = (Maintab1Fragment) getSupportFragmentManager().findFragmentByTag(getFragmentTag(viewPager.getId(), 0));
+            tab1.updateRecyclerView(tab1RequestList);
+//            maintab1Fragment.updateRecyclerView(tab1RequestList);
         }
         if(tab2RequestList.size() != 0){
-            maintab2Fragment.updateRecyclerView(tab2RequestList);
+            Log.d(TAG, "got tab2requestlist");
+            Maintab2Fragment tab2 = (Maintab2Fragment) getSupportFragmentManager().findFragmentByTag(getFragmentTag(viewPager.getId(), 1));
+            tab2.updateRecyclerView(tab2RequestList);
+//            maintab2Fragment.updateRecyclerView(tab2RequestList);
 
         }
         if(tab3RequestList.size() != 0){
-            maintab3Fragment.updateRecyclerView(tab3RequestList);
+            Log.d(TAG, "got tab3requestlist");
+            Maintab3Fragment tab3 = (Maintab3Fragment) getSupportFragmentManager().findFragmentByTag(getFragmentTag(viewPager.getId(), 2));
+            tab3.updateRecyclerView(tab3RequestList);
+//            maintab3Fragment.updateRecyclerView(tab3RequestList);
         }
 
 

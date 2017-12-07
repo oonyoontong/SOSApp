@@ -21,6 +21,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -159,7 +160,17 @@ public class SendRequestActivity extends AppCompatActivity {
         Response.Listener<String> responseListener = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d(TAG, response);
+                try {
+                    JSONObject responseJson = new JSONObject(response);
+                    JSONArray items = responseJson.getJSONArray("items");
+                    if (items.optBoolean(0)) {
+                        Toast.makeText(SendRequestActivity.this, "Request sent successfully", Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(SendRequestActivity.this, "Send request fail", Toast.LENGTH_LONG).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         };
 
@@ -171,7 +182,7 @@ public class SendRequestActivity extends AppCompatActivity {
         };
 //        SendHelpRequest sendHelpRequest = new SendHelpRequest(title, location, description, bestby, urgent, userID, responseListener, responseErrorListener);
         Log.d(TAG, String.valueOf(userID));
-        SendHelpRequest sendHelpRequest = new SendHelpRequest(title, location, description, bestby, urgent, userID);
+        SendHelpRequest sendHelpRequest = new SendHelpRequest(title, location, description, bestby, urgent, userID, responseListener, responseErrorListener);
         VolleyQueueSingleton.getInstance(SendRequestActivity.this.getApplicationContext()).addToRequestQueue(sendHelpRequest);
 
         Toast.makeText(SendRequestActivity.this, "Request Sent", Toast.LENGTH_SHORT).show();

@@ -2,6 +2,7 @@ package com.example.helplah;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -19,6 +21,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
@@ -93,7 +96,29 @@ public class RequestDetails extends AppCompatActivity {
 //                        } catch (JSONException e) {
 //                            e.printStackTrace();
 //                        }
-                        StringRequest acceptRequest = new StringRequest(Request.Method.POST, ACCEPT_REQUEST_URL, null, null) {
+                        StringRequest acceptRequest = new StringRequest(Request.Method.POST, ACCEPT_REQUEST_URL, new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                try {
+                                    JSONObject responseJson = new JSONObject(response);
+                                    JSONArray items = responseJson.getJSONArray("items");
+                                    if (items.optBoolean(0)) {
+                                        Intent intent = new Intent(RequestDetails.this, MainActivity.class);
+                                        RequestDetails.this.startActivity(intent);
+                                    } else {
+                                        Toast.makeText(RequestDetails.this, "The Job has been taken by someone else", Toast.LENGTH_LONG).show();
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+                            }
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                VolleyLog.d("requestdetailsActivity", "Error: " + error.getMessage());
+                            }
+                        }) {
                             @Override
                             protected Map<String, String> getParams(){
                                 Map<String, String> params = new HashMap<String, String>();

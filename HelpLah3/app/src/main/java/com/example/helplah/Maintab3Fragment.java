@@ -99,6 +99,7 @@ public class Maintab3Fragment extends Fragment {
             recyclerView.setAdapter(adapter);
         }else{
             Log.d(TAG, "adapter null");
+            Log.d(TAG, Maintab3Fragment.this.getActivity().toString());
             adapter = new ListRequestAdapter(listRequests, Maintab3Fragment.this.getActivity());
             recyclerView.setAdapter(adapter);
         }

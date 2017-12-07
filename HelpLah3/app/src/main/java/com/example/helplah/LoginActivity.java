@@ -72,6 +72,7 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //login authentication
                 final String userName = username.getText().toString();
                 final String userPass = userpass.getText().toString();
 
@@ -86,6 +87,7 @@ public class LoginActivity extends AppCompatActivity {
                                 if(checkFlag){
                                     Log.d("sharedPreferences", "saving username and pass");
                                     editor.putString("username", userName);
+                                    Log.d(TAG, hashFunction.hash(userPass));
                                     editor.putString("password", hashFunction.hash(userPass));
                                     editor.apply();
                                 }
@@ -112,7 +114,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 };
 
-                LoginWebRequest loginWebRequest = new LoginWebRequest(userName, userPass, responseListener, responseErrorListener);
+                LoginWebRequest loginWebRequest = new LoginWebRequest(userName, hashFunction.hash(userPass), responseListener, responseErrorListener);
                 VolleyQueueSingleton.getInstance(LoginActivity.this.getApplicationContext()).addToRequestQueue(loginWebRequest);
 
             }
@@ -129,6 +131,7 @@ public class LoginActivity extends AppCompatActivity {
                     try {
                         JSONObject jsonRequest = new JSONObject(response);
                         JSONArray items = jsonRequest.getJSONArray("items");
+                        Log.d(TAG, String.valueOf(items.optInt(0)));
                         if(items.optInt(0) != 0){
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                             LoginActivity.this.startActivity(intent);

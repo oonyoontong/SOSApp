@@ -17,6 +17,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import utils.VolleyQueueSingleton;
+import utils.hashFunction;
 import volleys.RegisterWebRequest;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -70,7 +71,7 @@ public class RegisterActivity extends AppCompatActivity {
                         VolleyLog.d(TAG, "Error: " + error.getMessage());
                     }
                 };
-                RegisterWebRequest registerWebRequest = new RegisterWebRequest(displayName, username, userpass, responseListener, responseErrorListener);
+                RegisterWebRequest registerWebRequest = new RegisterWebRequest(displayName, username, hashFunction.hash(userpass), responseListener, responseErrorListener);
                 VolleyQueueSingleton.getInstance(RegisterActivity.this.getApplicationContext()).addToRequestQueue(registerWebRequest);
             }
         });
