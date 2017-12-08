@@ -17,7 +17,7 @@ import org.json.JSONObject;
 
 import utils.VolleyQueueSingleton;
 
-public class ListRequest {
+public class AcceptedRequestList {
     private String title;
     private String description;
     private String location;
@@ -33,7 +33,7 @@ public class ListRequest {
     private static final String GETNAME_URL = "https://endpoint-dot-infosys-group2-4.appspot.com/_ah/api/sos/v1/";
 
 
-    public ListRequest(String title, String description, String location, String bestby, Integer requesterID, Integer rqid, Context context) {
+    public AcceptedRequestList(String title, String description, String location, String bestby, Integer requesterID, Integer rqid, Context context) {
         this.title = title;
         this.description = description;
         this.requesterID = requesterID;
@@ -70,7 +70,7 @@ public class ListRequest {
 
     }
 
-    public ListRequest(){
+    public AcceptedRequestList(){
     }
 
     public void setTitle(String title) {

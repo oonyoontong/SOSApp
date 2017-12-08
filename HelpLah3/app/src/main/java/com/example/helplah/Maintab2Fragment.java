@@ -11,18 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.JsonObjectRequest;
-
-import org.json.JSONObject;
-
-import java.util.ArrayList;
 import java.util.List;
 
-import utils.VolleyQueueSingleton;
+import adapter.ListRequestAdapter;
 
 public class Maintab2Fragment extends Fragment {
     private static final String TAG = "Tab2Fragment";

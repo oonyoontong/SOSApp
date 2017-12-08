@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.helplah">
-    
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -24,7 +24,10 @@
         <activity android:name=".RequestDetails" />
         <activity android:name=".SendRequestActivity" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".RegisterActivity"></activity>
+        <activity android:name=".RegisterActivity" />
+        <activity android:name=".AcceptedRequestDetails" />
+        <activity android:name=".MRequestDetail" />
+
     </application>
 
 </manifest>

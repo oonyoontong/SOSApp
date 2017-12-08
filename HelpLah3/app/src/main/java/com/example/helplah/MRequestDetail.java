@@ -25,18 +25,19 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 
 import adapter.ListRequestAdapter2;
 import utils.VolleyQueueSingleton;
 
-public class RequestDetails extends AppCompatActivity {
+public class MRequestDetail extends AppCompatActivity {
     private TextView requestTitle;
     private TextView requestDesc;
     private TextView requestLocation;
     private TextView requestBestby;
     private TextView requesterIDtext;
-    private Button acceptRqBtn;
+    private Button deleteRqBtn;
 
     private Integer requesterID;
     private String title;
@@ -49,27 +50,27 @@ public class RequestDetails extends AppCompatActivity {
 
     SharedPreferences sharedPreferences;
 
-    private static final String ACCEPT_REQUEST_URL = "https://endpoint-dot-infosys-group2-4.appspot.com/_ah/api/sos/v1/request/accept";
+    private static final String DELETE_REQUEST_URL = "https://endpoint-dot-infosys-group2-4.appspot.com/_ah/api/sos/v1/request/delete?RQID=";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_request_details);
+        setContentView(R.layout.content_m_request_details);
 
-        requestTitle = (TextView) findViewById(R.id.requestTitleDetail);
-        requestDesc = (TextView) findViewById(R.id.requestDescriptionDetail);
-        requestLocation = (TextView) findViewById(R.id.requestLocationDetail);
-        requestBestby = (TextView) findViewById(R.id.requestBestByDetail);
-        requesterIDtext = (TextView) findViewById(R.id.requestRequesterDetail);
+        requestTitle = (TextView) findViewById(R.id.mrequestTitleDetail);
+        requestDesc = (TextView) findViewById(R.id.mrequestDescriptionDetail);
+        requestLocation = (TextView) findViewById(R.id.mrequestLocationDetail);
+        requestBestby = (TextView) findViewById(R.id.mrequestBestByDetail);
+        requesterIDtext = (TextView) findViewById(R.id.mrequestRequesterDetail);
 
 
-        requesterID = getIntent().getIntExtra(ListRequestAdapter2.ViewHolder1.REQUESTER_ID, 0);
-        title = getIntent().getStringExtra(ListRequestAdapter2.ViewHolder1.REQUEST_TITLE);
-        description = getIntent().getStringExtra(ListRequestAdapter2.ViewHolder1.REQUEST_DESCRIPTION);
-        location = getIntent().getStringExtra(ListRequestAdapter2.ViewHolder1.REQUEST_LOCATION);
-        bestby = getIntent().getStringExtra(ListRequestAdapter2.ViewHolder1.REQUEST_BESTBY);
-        rqid = getIntent().getIntExtra(ListRequestAdapter2.ViewHolder1.REQUEST_ID, 0);
-        username = getIntent().getStringExtra(ListRequestAdapter2.ViewHolder1.REQUEST_USERNAME);
+        requesterID = getIntent().getIntExtra(ListRequestAdapter2.ViewHolder3.REQUESTER_ID3, 0);
+        title = getIntent().getStringExtra(ListRequestAdapter2.ViewHolder3.REQUEST_TITLE3);
+        description = getIntent().getStringExtra(ListRequestAdapter2.ViewHolder3.REQUEST_DESCRIPTION3);
+        location = getIntent().getStringExtra(ListRequestAdapter2.ViewHolder3.REQUEST_LOCATION3);
+        bestby = getIntent().getStringExtra(ListRequestAdapter2.ViewHolder3.REQUEST_BESTBY3);
+        rqid = getIntent().getIntExtra(ListRequestAdapter2.ViewHolder3.REQUEST_ID3, 0);
+        username = getIntent().getStringExtra(ListRequestAdapter2.ViewHolder3.REQUEST_USERNAME3);
 
         sharedPreferences = getSharedPreferences("login.conf", Context.MODE_PRIVATE);
         userID = sharedPreferences.getInt("userId", 0);
@@ -80,11 +81,11 @@ public class RequestDetails extends AppCompatActivity {
         requestBestby.setText(bestby);
         requesterIDtext.setText(username);
 
-        acceptRqBtn = (Button) findViewById(R.id.accept_request_btn);
-        acceptRqBtn.setOnClickListener(new View.OnClickListener() {
+        deleteRqBtn = (Button) findViewById(R.id.delete_request_btn);
+        deleteRqBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog alertDialog = new AlertDialog.Builder(RequestDetails.this).create();
+                AlertDialog alertDialog = new AlertDialog.Builder(MRequestDetail.this).create();
                 alertDialog.setTitle("Help Confirmation");
                 alertDialog.setMessage("Confirm accept ah? Don't back out mcb");
                 alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK, NP", new DialogInterface.OnClickListener() {
@@ -97,46 +98,34 @@ public class RequestDetails extends AppCompatActivity {
 //                        } catch (JSONException e) {
 //                            e.printStackTrace();
 //                        }
-                        StringRequest acceptRequest = new StringRequest(Request.Method.POST, ACCEPT_REQUEST_URL, new Response.Listener<String>() {
+                        String url = DELETE_REQUEST_URL + rqid;
+                        JsonObjectRequest deleteRequest = new JsonObjectRequest(Request.Method.DELETE, url, null, new Response.Listener<JSONObject>() {
                             @Override
-                            public void onResponse(String response) {
+                            public void onResponse(JSONObject response) {
                                 try {
-                                    JSONObject responseJson = new JSONObject(response);
-                                    JSONArray items = responseJson.getJSONArray("items");
-                                    if (items.optBoolean(0)) {
-                                        Intent intent = new Intent(RequestDetails.this, MainActivity.class);
-                                        RequestDetails.this.startActivity(intent);
-                                    } else {
-                                        Toast.makeText(RequestDetails.this, "The Job has been taken by someone else", Toast.LENGTH_LONG).show();
+                                    JSONArray jsonArray = response.getJSONArray("items");
+                                    if(jsonArray.optBoolean(0)){
+                                        Log.d("AcceptRequestDetails", "task deleted successfully");
+                                        Toast.makeText(MRequestDetail.this, "Macam tu la. Help more people!", Toast.LENGTH_LONG).show();
+                                    }else{
+                                        Log.d("AcceptRequestDetails", "task not deleted successfully");
                                     }
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
-
                             }
                         }, new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
                                 VolleyLog.d("requestdetailsActivity", "Error: " + error.getMessage());
                             }
-                        }) {
-                            @Override
-                            protected Map<String, String> getParams(){
-                                Map<String, String> params = new HashMap<String, String>();
-                                Log.d("acceptRequest", String.valueOf(rqid));
-                                Log.d("acceptRequest", String.valueOf(userID));
+                        });
 
-                                params.put("acceptId", String.valueOf(userID));
-                                params.put("rqId", String.valueOf(rqid));
 
-                                return params;
-                            }
-                        };
-
-                        VolleyQueueSingleton.getInstance(RequestDetails.this.getApplicationContext()).addToRequestQueue(acceptRequest);
+                        VolleyQueueSingleton.getInstance(MRequestDetail.this.getApplicationContext()).addToRequestQueue(deleteRequest);
                         dialogInterface.dismiss();
 
-                        Intent taskAccepted = new Intent(RequestDetails.this, MainActivity.class);
+                        Intent taskAccepted = new Intent(MRequestDetail.this, MainActivity.class);
                         finish();
                         startActivity(taskAccepted);
                     }

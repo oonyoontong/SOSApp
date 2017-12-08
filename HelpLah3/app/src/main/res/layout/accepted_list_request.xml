@@ -6,34 +6,36 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_margin="@dimen/fab_margin"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/colorPrimaryDark">
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_blue_dark">
 
         <LinearLayout
-            android:padding="@dimen/fab_margin"
-            android:orientation="vertical"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/fab_margin">
 
             <TextView
-                android:id="@+id/cardview_displayname"
+                android:id="@+id/cardview_displayname2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text= "Display Name"
-                android:textSize="20dp"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginRight="16dp"
-                />
+                android:text="Display Name"
+                android:textSize="20dp" />
 
             <TextView
-                android:id="@+id/textViewHead"
-                android:text="Heading"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                android:id="@+id/textViewHead2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="Heading"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
 
                 />
 
@@ -41,23 +43,25 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingRight="12dp">
+
                 <TextView
-                    android:id="@+id/textviewDesc"
+                    android:id="@+id/textviewDesc2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Description"
                     android:inputType="textMultiLine"
-                    android:lines="3"/>
+                    android:lines="3"
+                    android:text="Description" />
             </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
-            android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true">
+            android:layout_alignParentTop="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp">
+
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

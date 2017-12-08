@@ -5,4 +5,5 @@
     <string name="messages">Messages</string>
     <string name="new_request">New Request</string>
     <string name="title">Title</string>
+    <string name="title_activity_m_request_detials">mRequestDetials</string>
 </resources>

@@ -11,18 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.JsonObjectRequest;
-
-import org.json.JSONObject;
-
-import java.util.ArrayList;
 import java.util.List;
 
-import utils.VolleyQueueSingleton;
+import adapter.ListRequestAdapter;
+import adapter.ListRequestAdapter2;
 
 public class Maintab3Fragment extends Fragment {
     private static final String TAG = "Tab3Fragment";
@@ -30,8 +22,8 @@ public class Maintab3Fragment extends Fragment {
 
     private RecyclerView recyclerView;
     //TODO: create separate adapter for tab3 fragment
-    private ListRequestAdapter adapter;
-    private List<ListRequest> listRequests;
+    private ListRequestAdapter2 adapter;
+    private List<Object> listRequests;
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.maintab3_fragment, container, false);
@@ -68,7 +60,7 @@ public class Maintab3Fragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(Maintab3Fragment.this.getActivity()));
 
         if(listRequests != null){
-            adapter = new ListRequestAdapter(listRequests, Maintab3Fragment.this.getActivity());
+            adapter = new ListRequestAdapter2(listRequests, Maintab3Fragment.this.getActivity());
             recyclerView.setAdapter(adapter);
         }
     }
@@ -90,7 +82,7 @@ public class Maintab3Fragment extends Fragment {
         //create list of request that will be put into a list adapter
 
 
-    public void updateRecyclerView(List<ListRequest> requestDatas){
+    public void updateRecyclerView(List<Object> requestDatas){
         listRequests = requestDatas;
         if(adapter != null){
             Log.d(TAG, "adapter not null");
@@ -100,7 +92,7 @@ public class Maintab3Fragment extends Fragment {
         }else{
             Log.d(TAG, "adapter null");
             Log.d(TAG, Maintab3Fragment.this.getActivity().toString());
-            adapter = new ListRequestAdapter(listRequests, Maintab3Fragment.this.getActivity());
+            adapter = new ListRequestAdapter2(listRequests, Maintab3Fragment.this.getActivity());
             recyclerView.setAdapter(adapter);
         }
     }

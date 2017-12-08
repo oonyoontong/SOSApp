@@ -18,7 +18,7 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/cardview_displayname"
+                android:id="@+id/cardview_displayname3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text= "Display Name"
@@ -29,7 +29,7 @@
                 />
 
             <TextView
-                android:id="@+id/textViewHead"
+                android:id="@+id/textViewHead3"
                 android:text="Heading"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
                 android:layout_width="wrap_content"
@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:paddingRight="12dp">
                 <TextView
-                    android:id="@+id/textviewDesc"
+                    android:id="@+id/textviewDesc3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Description"
