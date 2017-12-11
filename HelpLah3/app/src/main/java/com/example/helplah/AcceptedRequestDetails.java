@@ -115,6 +115,7 @@ public class AcceptedRequestDetails extends AppCompatActivity {
                         dialogInterface.dismiss();
 
                         Intent taskFinished = new Intent(AcceptedRequestDetails.this, MainActivity.class);
+                        taskFinished.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         finish();
                         startActivity(taskFinished);
                     }

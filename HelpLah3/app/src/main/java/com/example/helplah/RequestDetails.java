@@ -86,7 +86,7 @@ public class RequestDetails extends AppCompatActivity {
             public void onClick(View view) {
                 AlertDialog alertDialog = new AlertDialog.Builder(RequestDetails.this).create();
                 alertDialog.setTitle("Help Confirmation");
-                alertDialog.setMessage("Confirm accept ah? Don't back out mcb");
+                alertDialog.setMessage("Confirm accept ah?");
                 alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK, NP", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -137,6 +137,7 @@ public class RequestDetails extends AppCompatActivity {
                         dialogInterface.dismiss();
 
                         Intent taskAccepted = new Intent(RequestDetails.this, MainActivity.class);
+                        taskAccepted.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         finish();
                         startActivity(taskAccepted);
                     }

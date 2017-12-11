@@ -2,7 +2,6 @@ package com.example.helplah;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.support.v4.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -10,9 +9,12 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -42,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     private SectionPageAdapter mSectionPageAdapter;
 
     private ViewPager mViewPager;
+    private TabLayout tabLayout;
 
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
@@ -68,21 +71,14 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
-
         Log.d(TAG, "onCreate: Starting.");
 
         mViewPager = (ViewPager) findViewById(R.id.container);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
+        //createTabIcons();
+
 
         sharedPreferences = getSharedPreferences("login.conf", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
@@ -137,10 +133,28 @@ public class MainActivity extends AppCompatActivity {
         VolleyQueueSingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);
 
         //TODO: refresh button for recyclerview
-        if(!sharedPreferences.getString("displayName", "").equals("")){
-            Toast.makeText(this, "HELP LAH " + sharedPreferences.getString("displayName", "") + "!!", Toast.LENGTH_LONG).show();
-        }
+//        if(!sharedPreferences.getString("displayName", "").equals("")){
+//            Toast.makeText(this, "HELP LAH " + sharedPreferences.getString("displayName", "") + "!!", Toast.LENGTH_LONG).show();
+//        }
 
+    }
+
+    private void createTabIcons(){
+        //set tab icons
+        LinearLayout tab1 = (LinearLayout) LayoutInflater.from(this).inflate(R.layout.custom_tabs, null);
+        ImageView tab1icon = (ImageView) findViewById(R.id.tabicon);
+        tab1icon.setImageResource(R.drawable.ic_people_white_24dp);
+        tabLayout.getTabAt(0).setCustomView(tab1icon);
+
+        LinearLayout tab2 = (LinearLayout) LayoutInflater.from(this).inflate(R.layout.custom_tabs, null);
+        ImageView tab2icon = (ImageView) findViewById(R.id.tabicon);
+        tab2icon.setImageResource(R.drawable.ic_tab3_24dp);
+        tabLayout.getTabAt(1).setCustomView(tab2icon);
+
+        LinearLayout tab3 = (LinearLayout) LayoutInflater.from(this).inflate(R.layout.custom_tabs, null);
+        ImageView tab3icon = (ImageView) findViewById(R.id.tabicon);
+        tab3icon.setImageResource(R.drawable.ic_tab3_24dp);
+        tabLayout.getTabAt(2).setCustomView(tab3icon);
     }
 
     private void queryData(){
@@ -396,6 +410,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.refresh:
                 refreshRecyclerViews();
+
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

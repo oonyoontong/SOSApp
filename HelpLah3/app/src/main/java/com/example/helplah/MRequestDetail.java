@@ -86,9 +86,9 @@ public class MRequestDetail extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 AlertDialog alertDialog = new AlertDialog.Builder(MRequestDetail.this).create();
-                alertDialog.setTitle("Help Confirmation");
-                alertDialog.setMessage("Confirm accept ah? Don't back out mcb");
-                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK, NP", new DialogInterface.OnClickListener() {
+                alertDialog.setTitle("Delete Confirmation");
+                alertDialog.setMessage("Confirm Delete? Sure don't need help ar?");
+                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Yup", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 //                        JSONObject acceptParams = new JSONObject();
@@ -105,10 +105,10 @@ public class MRequestDetail extends AppCompatActivity {
                                 try {
                                     JSONArray jsonArray = response.getJSONArray("items");
                                     if(jsonArray.optBoolean(0)){
-                                        Log.d("AcceptRequestDetails", "task deleted successfully");
-                                        Toast.makeText(MRequestDetail.this, "Macam tu la. Help more people!", Toast.LENGTH_LONG).show();
+                                        Log.d("MRequestDetails", "task deleted successfully");
+                                        Toast.makeText(MRequestDetail.this, "Request Deleted", Toast.LENGTH_LONG).show();
                                     }else{
-                                        Log.d("AcceptRequestDetails", "task not deleted successfully");
+                                        Log.d("MRequestDetails", "task not deleted successfully");
                                     }
                                 } catch (JSONException e) {
                                     e.printStackTrace();
@@ -126,6 +126,7 @@ public class MRequestDetail extends AppCompatActivity {
                         dialogInterface.dismiss();
 
                         Intent taskAccepted = new Intent(MRequestDetail.this, MainActivity.class);
+                        taskAccepted.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         finish();
                         startActivity(taskAccepted);
                     }

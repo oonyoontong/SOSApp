@@ -95,8 +95,13 @@ public class LoginActivity extends AppCompatActivity {
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
 //                                intent.putExtra(KEY, items.optInt(0));
                                 Log.d(TAG, String.valueOf(items.optInt(0)));
+//                                if(sharedPreferences.getInt("userId", 0) == 0) {
                                 editor.putInt("userId", items.optInt(0));
                                 editor.apply();
+//                                }else{
+//                                    editor.putInt("userId", items.optInt(0));
+//                                    editor.commit();
+//                                }
                                 LoginActivity.this.startActivity(intent);
                                 finish();
                             }else{
