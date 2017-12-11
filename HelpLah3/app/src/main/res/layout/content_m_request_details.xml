@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:fitsSystemWindows="true"
+    tools:context="com.example.helplah.RequestDetails">
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/box"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/colorWhite"
+        android:orientation="vertical"
+        android:scrollbarAlwaysDrawVerticalTrack="true">
+
+
+        <include layout="@layout/action_bar" />
+        <TextView
+            android:id="@+id/signin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="15dp"
+            android:layout_centerHorizontal="true"
+            android:text="Request Details"
+            android:textColor="@color/colorWhite"
+            android:textSize="26sp"
+            android:textStyle="bold" />
+
+
+
+
+        <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/signin"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="100dp"
+        android:background="@color/colorWhite"
+        android:elevation="4dp"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+
+    <!--/Title-->
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/text_input_layout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_gravity="center">
+
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textSize="20sp"-->
+            <!--android:text="Title: "-->
+           <!--/>-->
+
+
+        <TextView
+            android:id="@+id/mrequestTitleDetail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorBlack"
+            android:layout_gravity="center_horizontal"
+            android:textSize="25dp"
+            android:textStyle="bold"
+            />
+
+    </android.support.design.widget.TextInputLayout>
+
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/text_input_layout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_gravity="center">
+
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textSize="20sp"-->
+            <!--android:text="Description: "-->
+          <!---->
+            <!--/>-->
+
+        <TextView
+            android:id="@+id/mrequestDescriptionDetail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorBlack"
+            android:padding="10dp"
+            android:drawableLeft="@drawable/ic_description_black_24dp"
+            android:drawablePadding="10dp"/>
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/text_input_layout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_gravity="center">
+
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textSize="20sp"-->
+            <!--android:text="Location: "-->
+            <!--android:drawableLeft="@drawable/ic_location_on_black_24dp"-->
+            <!--android:drawablePadding="10dp"/>-->
+
+        <TextView
+            android:id="@+id/mrequestLocationDetail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorBlack"
+            android:drawableLeft="@drawable/ic_location_on_black_24dp"
+            android:drawablePadding="10dp"
+            android:padding="10dp"
+            />
+    </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/text_input_layout4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_gravity="center">
+
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textSize="20sp"-->
+            <!--android:text="Best By: "-->
+            <!--android:drawableLeft="@drawable/ic_access_time_black_24dp"-->
+            <!--android:drawablePadding="10dp"/>-->
+
+            <TextView
+                android:id="@+id/mrequestBestByDetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/calendar"
+                android:textColor="@color/colorBlack"
+                android:drawableLeft="@drawable/ic_access_time_black_24dp"
+                android:drawablePadding="10dp"
+                android:padding="10dp"
+                />
+        </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/text_input_layout5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_gravity="center">
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textSize="20sp"-->
+            <!--android:text="Requester: "-->
+            <!--android:drawableLeft="@drawable/ic_person_outline_black_24dp"-->
+            <!--android:drawablePadding="10dp"/>-->
+
+        <TextView
+            android:id="@+id/mrequestRequesterDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorBlack"
+            android:drawableLeft="@drawable/ic_person_outline_black_24dp"
+            android:drawablePadding="10dp"
+            android:padding="10dp"
+            />
+    </android.support.design.widget.TextInputLayout>
+
+    </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_alignParentBottom="true"
+            >
+
+            <Button
+                android:id="@+id/delete_request_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_gravity="right"
+                android:text="Delete Request"
+                android:textColor="@color/colorWhite"
+                android:background="@color/colorBlue"
+                android:drawableLeft="@drawable/ic_delete_black_24dp"
+                android:paddingLeft="10dp"
+                android:drawableTint="@color/colorWhite"
+                />
+
+
+        </LinearLayout>
+
+</RelativeLayout>
+    </ScrollView>
+
+
+
+
+
+
