@@ -62,11 +62,11 @@ public class Maintab1Fragment extends Fragment{
     }
 
     public void addListRequest(List<Object> requests) {
-        /*if(listRequests == null){
+        if(listRequests == null){
 
         }else{
             requests.addAll(listRequests);
-        }*/
+        }
         listRequests = requests;
         updateRecyclerView(requests);
 

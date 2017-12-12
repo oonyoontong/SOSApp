@@ -12,9 +12,12 @@ import android.widget.TextView;
 
 import com.example.helplah.AcceptedRequestDetails;
 import com.example.helplah.AcceptedRequestList;
+import com.example.helplah.ConversationActivity;
 import com.example.helplah.ListRequest;
 import com.example.helplah.MRequest;
 import com.example.helplah.MRequestDetail;
+import com.example.helplah.MainActivity;
+import com.example.helplah.Maintab1Fragment;
 import com.example.helplah.R;
 import com.example.helplah.RequestDetails;
 
@@ -138,6 +141,12 @@ public class ListRequestAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewH
 
         @Override
         public void onClick(View view) {
+            if (view.getId() == R.id.messageButton1){
+
+                ConversationActivity.open(context);
+                return;
+            }
+
             Intent intent = new Intent(context, RequestDetails.class);
             int position = getAdapterPosition();
 
@@ -189,6 +198,12 @@ public class ListRequestAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewH
 
         @Override
         public void onClick(View view) {
+            if (view.getId() == R.id.messageButton2){
+
+                ConversationActivity.open(context);
+                return;
+            }
+
             Intent intent = new Intent(context, AcceptedRequestDetails.class);
             int position = getAdapterPosition();
 
@@ -239,6 +254,13 @@ public class ListRequestAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewH
 
         @Override
         public void onClick(View view) {
+
+            if (view.getId() == R.id.messageButton3){
+
+                ConversationActivity.open(context);
+                return;
+            }
+
             Intent intent = new Intent(context, MRequestDetail.class);
             int position = getAdapterPosition();
 
