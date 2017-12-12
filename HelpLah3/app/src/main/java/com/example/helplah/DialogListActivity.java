@@ -62,7 +62,6 @@ public class DialogListActivity extends AppCompatActivity implements DialogsList
     public void onDialogLongClick(Dialog dialog) {
 
     }
-
     @Override
     public void onDialogClick(Dialog dialog) {
         ConversationActivity.open(this);

@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.helplah.AcceptedRequestDetails;
@@ -69,12 +70,24 @@ public class ListRequestAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewH
             case LISTREQUEST:
                 ViewHolder1 vh1 = (ViewHolder1)holder;
                 ListRequest listRequest = (ListRequest) listRequests.get(position);
+                vh1.messagebutton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ConversationActivity.open(context);
+                    }
+                });
                 vh1.textViewHead.setText(listRequest.getTitle());
                 vh1.textViewDisc.setText(listRequest.getDescription());
                 vh1.textViewDisplayName.setText(listRequest.getDisplayName());
                 break;
             case ACCEPTED_LISTREQUEST:
                 ViewHolder2 vh2 = (ViewHolder2)holder;
+                vh2.messageButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ConversationActivity.open(context);
+                    }
+                });
                 AcceptedRequestList acceptedRequestList = (AcceptedRequestList) listRequests.get(position);
                 vh2.textViewHead2.setText(acceptedRequestList.getTitle());
                 vh2.textViewDisc2.setText(acceptedRequestList.getDescription());
@@ -88,6 +101,7 @@ public class ListRequestAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewH
                 vh3.textViewDisc3.setText(myRequest.getDescription());
                 vh3.textViewDisplayName3.setText(myRequest.getDisplayName());
                 break;
+
 
         }
 
@@ -115,7 +129,7 @@ public class ListRequestAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     public class ViewHolder1 extends RecyclerView.ViewHolder implements View.OnClickListener{
-
+        ImageButton messagebutton;
         public TextView textViewHead;
         public TextView textViewDisc;
         public TextView textViewDisplayName;
@@ -132,6 +146,7 @@ public class ListRequestAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewH
         //standard viewholder for requests
         public ViewHolder1(View itemView) {
             super(itemView);
+            messagebutton = (ImageButton) itemView.findViewById(R.id.messageButton1);
             textViewHead = (TextView) itemView.findViewById(R.id.textViewHead);
             textViewDisc = (TextView) itemView.findViewById(R.id.textviewDesc);
             textViewDisplayName = (TextView) itemView.findViewById(R.id.cardview_displayname);
@@ -174,6 +189,7 @@ public class ListRequestAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewH
 
     //viewholder for accepted request
     public class ViewHolder2 extends RecyclerView.ViewHolder implements View.OnClickListener{
+        ImageButton messageButton;
         public TextView textViewHead2;
         public TextView textViewDisc2;
         public TextView textViewDisplayName2;
@@ -193,6 +209,7 @@ public class ListRequestAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewH
             textViewDisc2 = (TextView) itemView.findViewById(R.id.textviewDesc2);
             textViewDisplayName2 = (TextView) itemView.findViewById(R.id.cardview_displayname2);
             context = itemView.getContext();
+            messageButton = (ImageButton) itemView.findViewById(R.id.messageButton2);
             itemView.setOnClickListener(this);
         }
 
@@ -255,11 +272,6 @@ public class ListRequestAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewH
         @Override
         public void onClick(View view) {
 
-            if (view.getId() == R.id.messageButton3){
-
-                ConversationActivity.open(context);
-                return;
-            }
 
             Intent intent = new Intent(context, MRequestDetail.class);
             int position = getAdapterPosition();

@@ -81,6 +81,8 @@ public class MRequestDetail extends AppCompatActivity {
         requestBestby.setText(bestby);
         requesterIDtext.setText(username);
 
+
+
         deleteRqBtn = (Button) findViewById(R.id.delete_request_btn);
         deleteRqBtn.setOnClickListener(new View.OnClickListener() {
             @Override
