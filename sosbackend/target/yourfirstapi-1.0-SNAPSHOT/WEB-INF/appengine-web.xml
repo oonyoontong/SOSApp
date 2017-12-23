@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<appengine-web-app xmlns="http://appengine.google.com/ns/1.0">
+    <threadsafe>true</threadsafe>
+    <system-properties>
+        <property name="java.util.logging.config.file" value="WEB-INF/logging.properties"/>
+     </system-properties>
+    <basic-scaling>
+        <max-instances>5</max-instances>
+    </basic-scaling>
+    <env-variables>
+        <env-var name="ENDPOINTS_SERVICE_NAME" value="infosys-group2-4.appspot.com" />
+    </env-variables>
+
+    <service>endpoint</service>
+
+    <runtime>java8</runtime>
+    <use-google-connector-j>true</use-google-connector-j>
+
+
+</appengine-web-app>

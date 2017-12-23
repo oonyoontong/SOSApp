@@ -1,0 +1,58 @@
+{
+ "swagger": "2.0",
+ "info": {
+  "version": "1.0.0",
+  "title": "infosys-group2-4.appspot.com"
+ },
+ "host": "infosys-group2-4.appspot.com",
+ "basePath": "/_ah/api",
+ "schemes": [
+  "https"
+ ],
+ "consumes": [
+  "application/json"
+ ],
+ "produces": [
+  "application/json"
+ ],
+ "paths": {
+  "/sos/v1/request": {
+   "get": {
+    "operationId": "SosListRequest",
+    "parameters": [
+     {
+      "name": "id",
+      "in": "query",
+      "required": true,
+      "type": "integer",
+      "format": "int32"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "A successful response",
+      "schema": {
+       "$ref": "#/definitions/CollectionResponse_Integer"
+      }
+     }
+    }
+   }
+  }
+ },
+ "definitions": {
+  "CollectionResponse_Integer": {
+   "properties": {
+    "items": {
+     "type": "array",
+     "items": {
+      "type": "integer",
+      "format": "int32"
+     }
+    },
+    "nextPageToken": {
+     "type": "string"
+    }
+   }
+  }
+ }
+}
